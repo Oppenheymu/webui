@@ -48,8 +48,8 @@ export interface PermTrack {
 }
 
 export class Admin extends Service {
-  groups: PermGroup[]
-  tracks: PermTrack[]
+  groups!: PermGroup[]
+  tracks!: PermTrack[]
   entry?: Entry<Admin.Data>
 
   constructor(ctx: Context, public config: Admin.Config) {
@@ -103,49 +103,51 @@ export class Admin extends Service {
 
       ctx.console.addListener('admin/create-track', (name) => {
         return this.createTrack(name)
-      })
+      }, { authority: 4 })
 
       ctx.console.addListener('admin/rename-track', (id, name) => {
         return this.renameTrack(id, name)
-      })
+      }, { authority: 4 })
 
       ctx.console.addListener('admin/delete-track', (id) => {
         return this.deleteTrack(id)
-      })
+      }, { authority: 4 })
 
       ctx.console.addListener('admin/update-track', (id, permissions) => {
         return this.updateTrack(id, permissions)
-      })
+      }, { authority: 4 })
 
       ctx.console.addListener('admin/create-group', (name) => {
         return this.createGroup(name)
-      })
+      }, { authority: 4 })
 
       ctx.console.addListener('admin/rename-group', (id, name) => {
         return this.renameGroup(id, name)
-      })
+      }, { authority: 4 })
 
       ctx.console.addListener('admin/delete-group', (id) => {
         return this.deleteGroup(id)
-      })
+      }, { authority: 4 })
 
       ctx.console.addListener('admin/update-group', (id, permissions) => {
         return this.updateGroup(id, permissions)
-      })
+      }, { authority: 4 })
 
       ctx.console.addListener('admin/add-user', (gid, platform, aid) => {
         return this.addUser(gid, platform, aid)
-      })
+      }, { authority: 4 })
 
       ctx.console.addListener('admin/remove-user', (gid, platform, aid) => {
         return this.removeUser(gid, platform, aid)
-      })
+      }, { authority: 4 })
     })
   }
 
   private setupGroup(item: PermGroup) {
     item.dispose = this.ctx.permissions.define('(name)', {
-      inherits: ({ name }) => item.permissions.includes(name) && ['group:' + item.id],
+      inherits: ({ name }) => {
+        if (item.permissions.includes(name)) return ['group:' + item.id]
+      },
     })
   }
 

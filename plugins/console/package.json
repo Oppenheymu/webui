@@ -72,12 +72,12 @@
     "@types/uuid": "^8.3.4",
     "@vitejs/plugin-vue": "^5.1.4",
     "unocss": "^0.65.1",
-    "vite": "^5.4.10"
+    "vite": "^8.3.1"
   },
   "dependencies": {
     "@koishijs/console": "^5.30.11",
     "open": "^8.4.2",
-    "uuid": "^8.3.2",
+    "uuid": "^14.0.2",
     "ws": "^8.16.0"
   }
 }
